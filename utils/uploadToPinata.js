@@ -22,7 +22,6 @@ async function storeImages(imagesFilePath) {
                     name: `${files[fileIndex]}`,
                 },
             })
-            console.log(response)
             responses.push(response)
         } catch (error) {
             console.log(error)
@@ -31,6 +30,14 @@ async function storeImages(imagesFilePath) {
     return { responses, files }
 }
 
-async function storeTokenUriMetadata(metadata) {}
+async function storeTokenUriMetadata(metadata) {
+    try {
+        const response = await pinata.pinJSONToIPFS(metadata)
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+    return null
+}
 
-module.exports = { storeImages }
+module.exports = { storeImages, storeTokenUriMetadata }

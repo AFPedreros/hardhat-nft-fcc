@@ -12,7 +12,7 @@ error RandomIpfsNft__RangeOutOfBounds();
 error RandomIpfsNft__NeedMoreETHSent();
 error RandomIpfsNft__TransferFail();
 
-contract RanddomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
+contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     // Type declaration
     enum Breed {
         PUG,
@@ -79,9 +79,10 @@ contract RanddomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     {
         address dogOwner = s_requestIdtoSender[requestId];
         uint256 newTokenId = s_tokenCounter;
-
         uint256 moddedRng = randomWords[0] % MAX_CHANSE_VALUE;
+
         Breed dogBreed = getBreedFromModdedRng(moddedRng);
+        s_tokenCounter++;
         _safeMint(dogOwner, newTokenId);
         _setTokenURI(newTokenId, s_dogTokenUris[uint256(dogBreed)]);
         emit NftMinted(dogBreed, dogOwner);
