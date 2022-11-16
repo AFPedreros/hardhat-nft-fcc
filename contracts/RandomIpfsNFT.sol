@@ -29,7 +29,7 @@ contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     uint32 private constant NUM_WORDS = 1;
 
     // VRF helpers
-    mapping(uint256 => address) public s_requestIdtoSender;
+    mapping(uint256 => address) public s_requestIdToSender;
 
     // NFT variables
     uint256 public s_tokenCounter;
@@ -68,7 +68,7 @@ contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
             i_callbackGasLimit,
             NUM_WORDS
         );
-        s_requestIdtoSender[requestId] = msg.sender;
+        s_requestIdToSender[requestId] = msg.sender;
 
         emit NftRequested(requestId, msg.sender);
     }
@@ -77,7 +77,7 @@ contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         internal
         override
     {
-        address dogOwner = s_requestIdtoSender[requestId];
+        address dogOwner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
         uint256 moddedRng = randomWords[0] % MAX_CHANSE_VALUE;
 
