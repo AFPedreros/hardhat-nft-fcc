@@ -13,6 +13,8 @@ error RandomIpfsNft__NeedMoreETHSent();
 error RandomIpfsNft__TransferFail();
 
 contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
+    //TODO:
+
     // Type declaration
     enum Breed {
         PUG,

@@ -18,15 +18,15 @@ const networkConfig = {
         mintFee: "10000000000000000", // 0.01 ETH
         subscriptionId: "2747", // add your ID here!
     },
-}
+};
 
-const DECIMALS = "18"
-const INITIAL_PRICE = "200000000000000000000"
-const developmentChains = ["hardhat", "localhost"]
+const DECIMALS = "18";
+const INITIAL_PRICE = "200000000000000000000";
+const developmentChains = ["hardhat", "localhost"];
 
 module.exports = {
     networkConfig,
     developmentChains,
     DECIMALS,
     INITIAL_PRICE,
-}
+};
