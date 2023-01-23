@@ -14,6 +14,12 @@ error RandomIpfsNft__TransferFail();
 
 contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     //TODO:
+    // When mint the NFT, we will call a Chainlink VRF to get a random number
+    // We use the number to get a random NFT
+    // The pug is super rare, the shiba inu rare and the st. bernard common
+
+    // Users have to pay to mint the NFT
+    // The owner of the contract can withdraw the ETH
 
     // Type declaration
     enum Breed {
@@ -35,7 +41,7 @@ contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
 
     // NFT variables
     uint256 public s_tokenCounter;
-    uint256 internal constant MAX_CHANSE_VALUE = 100;
+    uint256 internal constant MAX_CHANCE_VALUE = 100;
     string[] internal s_dogTokenUris;
     uint256 i_mintFee;
 
@@ -81,7 +87,7 @@ contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     {
         address dogOwner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
-        uint256 moddedRng = randomWords[0] % MAX_CHANSE_VALUE;
+        uint256 moddedRng = randomWords[0] % MAX_CHANCE_VALUE;
 
         Breed dogBreed = getBreedFromModdedRng(moddedRng);
         s_tokenCounter++;
@@ -104,21 +110,21 @@ contract RandomIpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         returns (Breed)
     {
         uint256 cumulativeSum = 0;
-        uint256[3] memory chanseArray = getChanseArray();
-        for (uint256 i = 0; i < chanseArray.length; i++) {
+        uint256[3] memory chanceArray = getChanceArray();
+        for (uint256 i = 0; i < chanceArray.length; i++) {
             if (
                 moddedRng >= cumulativeSum &&
-                moddedRng < cumulativeSum + chanseArray[i]
+                moddedRng < cumulativeSum + chanceArray[i]
             ) {
                 return Breed(i);
             }
-            cumulativeSum += chanseArray[i];
+            cumulativeSum += chanceArray[i];
         }
         revert RandomIpfsNft__RangeOutOfBounds();
     }
 
-    function getChanseArray() public pure returns (uint256[3] memory) {
-        return [10, 20, MAX_CHANSE_VALUE];
+    function getChanceArray() public pure returns (uint256[3] memory) {
+        return [10, 20, MAX_CHANCE_VALUE];
     }
 
     function getMintFee() public view returns (uint256) {
